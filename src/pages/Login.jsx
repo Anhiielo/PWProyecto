@@ -3,34 +3,84 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState(''); // Añadido estado para correo
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username.trim() !== '') {
-      onLogin(username);
-      navigate('/'); // Redirección corregida a la raíz (Inicio)
+      onLogin(username); // Seguimos pasando el nombre para mostrarlo en el NavBar
+      navigate('/'); // Redirección a la raíz
     }
   };
 
   return (
-    <main style={{ padding: '2rem', textAlign: 'center' }}>
-      <h1>Iniciar Sesión</h1>
-      <p>Ingresa tu nombre de usuario para acceder a tu carrito y biblioteca.</p>
+    <main style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      minHeight: '80vh',
+      padding: '20px'
+    }}>
       
-      <form onSubmit={handleSubmit} style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-        <input 
-          type="text" 
-          placeholder="Ej: AngeloB" 
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          style={{ padding: '0.75rem', width: '250px', borderRadius: '4px', border: '1px solid #ccc' }}
-          required
-        />
-        <button type="submit" style={{ padding: '0.75rem 2rem', cursor: 'pointer' }}>
-          Entrar
-        </button>
-      </form>
+      <div style={{
+        background: 'var(--surface-color)',
+        padding: '40px',
+        borderRadius: 'var(--border-radius)',
+        border: '1px solid var(--border-color)',
+        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.05)',
+        width: '100%',
+        maxWidth: '400px',
+        textAlign: 'center'
+      }}>
+        
+        <div style={{ marginBottom: '30px' }}>
+          <h1 style={{ fontSize: '28px', marginBottom: '10px' }}>Bienvenido de nuevo</h1>
+          <p style={{ color: 'var(--text-muted)', margin: 0, fontSize: '15px' }}>
+            Inicia sesión para acceder a tu biblioteca y carrito.
+          </p>
+        </div>
+        
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          
+          <div style={{ textAlign: 'left' }}>
+            <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '500', color: 'var(--text-main)' }}>
+              Correo Electrónico
+            </label>
+            <input 
+              type="email" 
+              placeholder="ejemplo@correo.com" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{ width: '100%', boxSizing: 'border-box' }}
+            />
+          </div>
+
+          <div style={{ textAlign: 'left' }}>
+            <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '500', color: 'var(--text-main)' }}>
+              Nombre de Usuario
+            </label>
+            <input 
+              type="text" 
+              placeholder="Ej: PlayerOne" 
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={{ width: '100%', boxSizing: 'border-box' }}
+              required
+            />
+          </div>
+
+          <button type="submit" style={{ marginTop: '10px', width: '100%', padding: '12px' }}>
+            Iniciar Sesión
+          </button>
+          
+        </form>
+
+        <p style={{ marginTop: '25px', fontSize: '14px', color: 'var(--text-muted)' }}>
+          ¿No tienes una cuenta? <a href="#" style={{ fontWeight: '500' }}>Regístrate aquí</a>
+        </p>
+
+      </div>
     </main>
   );
 };

@@ -2,28 +2,52 @@ import { Link } from 'react-router-dom';
 
 const Navbar = ({ cartCount, currentUser, onLogout }) => {
   return (
-    <header style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem', background: '#222', color: '#fff', alignItems: 'center' }}>
+    <header style={{ 
+      display: 'flex', 
+      justifyContent: 'space-between', 
+      padding: '16px 32px', 
+      background: '#ffffff', 
+      alignItems: 'center', 
+      borderBottom: '1px solid var(--border-color)',
+      position: 'sticky',
+      top: 0,
+      zIndex: 100
+    }}>
       <div className="logo">
-        <Link to="/" style={{ color: '#fff', fontWeight: 'bold', textDecoration: 'none', fontSize: '1.2rem' }}>PeKeys</Link>
+        <Link to="/" style={{ 
+          color: 'var(--primary-color)', 
+          fontWeight: '700', 
+          textDecoration: 'none', 
+          fontSize: '24px',
+          letterSpacing: '-0.5px'
+        }}>PeKeys Store</Link>
       </div>
       
-      <nav style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-        <Link to="/catalog" style={{ color: '#fff', textDecoration: 'none' }}>Catálogo</Link>
+      <nav style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+        <Link to="/catalog" style={{ color: 'var(--text-main)', textDecoration: 'none', fontWeight: '500' }}>
+          Catálogo
+        </Link>
         
         {currentUser ? (
           <>
-            <Link to="/library" style={{ color: '#00ff00', textDecoration: 'none', fontWeight: 'bold' }}>Mis Compras</Link>
-            <Link to="/cart" style={{ color: '#fff', textDecoration: 'none' }}>Carrito ({cartCount})</Link>
-            <div style={{ marginLeft: '1rem', borderLeft: '1px solid #555', paddingLeft: '1rem' }}>
-              <span style={{ marginRight: '1rem', color: '#aaa' }}>Hola, {currentUser}</span>
-              <button onClick={onLogout} style={{ background: 'transparent', color: '#ff4444', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}>
+            <Link to="/library" style={{ color: 'var(--text-main)', textDecoration: 'none', fontWeight: '500' }}>
+              Mis Compras
+            </Link>
+            <Link to="/cart" style={{ color: 'var(--text-main)', textDecoration: 'none', fontWeight: '500' }}>
+              Carrito ({cartCount})
+            </Link>
+            <div style={{ marginLeft: '16px', borderLeft: '1px solid var(--border-color)', paddingLeft: '16px', display: 'flex', alignItems: 'center', gap: '16px' }}>
+              <span style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Hola, {currentUser}</span>
+              <button onClick={onLogout} className="btn-secondary" style={{ padding: '6px 12px', fontSize: '14px' }}>
                 Salir
               </button>
             </div>
           </>
         ) : (
-          <Link to="/login" style={{ background: '#007acc', color: '#fff', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '4px' }}>
-            Iniciar Sesión
+          <Link to="/login" style={{ textDecoration: 'none' }}>
+            <button style={{ padding: '8px 16px' }}>
+              Iniciar Sesión
+            </button>
           </Link>
         )}
       </nav>
