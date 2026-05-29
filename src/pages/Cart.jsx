@@ -12,7 +12,7 @@ const Cart = ({ cartItems, onRemove, onClear, onCompletePurchase }) => {
     setIsProcessing(true);
 
     setTimeout(() => {
-      // Generamos las keys para cada juego comprado en esta sesión
+  
       const itemsWithKeys = cartItems.map(item => {
         const randomKey = Math.random().toString(36).substring(2, 10).toUpperCase();
         return {
@@ -23,7 +23,7 @@ const Cart = ({ cartItems, onRemove, onClear, onCompletePurchase }) => {
       });
 
       setNewKeys(itemsWithKeys);
-      onCompletePurchase(itemsWithKeys); // Envía los datos a App.jsx para guardarlos en localStorage
+      onCompletePurchase(itemsWithKeys); 
       onClear(); 
       setIsProcessing(false);
       setPurchaseComplete(true);

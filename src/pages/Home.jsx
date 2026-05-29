@@ -2,11 +2,11 @@ import { Link } from 'react-router-dom';
 import { gamesMock } from '../mocks/games';
 
 const Home = () => {
-  // Tomamos algunos juegos para Tendencias y otros para Ofertas
+
   const tendencias = gamesMock.slice(0, 4);
   const ofertas = gamesMock.slice(4, 8);
 
-  // Función helper para obtener el color del tag según plataforma
+
   const getPlatformClass = (platform) => {
     switch (platform) {
       case 'PC': return 'tag-pc';
@@ -20,7 +20,7 @@ const Home = () => {
   return (
     <main className="home-container">
       
-      {/* 1. Hero Section: Diseño Elegante */}
+
       <header className="hero-section">
         <div className="hero-content">
           <h1>Encuentra tu próxima aventura</h1>
@@ -31,13 +31,13 @@ const Home = () => {
         </div>
       </header>
 
-      {/* 2. Barra de Búsqueda Elegante */}
+
       <div className="home-search-bar">
         <input type="text" placeholder="Buscar juegos, tarjetas o consolas..." />
         <button>Buscar</button>
       </div>
 
-      {/* 3. Categorías Rápidas con colores característicos */}
+
       <section className="categories-section">
         <h2 className="section-title">Elige tu Plataforma</h2>
         <div className="categories-grid">
@@ -56,7 +56,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 4. Tendencias Actuales (Grid de Productos) */}
       <section className="promo-section">
         <h2 className="section-title">Tendencias Actuales</h2>
         <div className="games-grid">
@@ -84,7 +83,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 5. Ofertas Destacadas */}
       <section className="promo-section">
         <h2 className="section-title">Ofertas Destacadas</h2>
         <div className="games-grid">
@@ -112,7 +110,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 6. Footer elegante */}
       <footer className="home-footer">
         <p>&copy; 2026 PeKeys Store. Todos los derechos reservados. Compras 100% seguras y confiables.</p>
       </footer>

@@ -9,7 +9,7 @@ const Catalog = ({ onAdd, currentUser }) => {
   
   const navigate = useNavigate();
 
-  // Lógica de filtrado combinado
+
   const filteredGames = gamesMock.filter(game => {
     const matchPlatform = filterPlatform === 'all' || game.platform === filterPlatform;
     const matchMin = minPrice === '' || game.price >= parseFloat(minPrice);
@@ -98,7 +98,7 @@ const Catalog = ({ onAdd, currentUser }) => {
           </button>
         </aside>
 
-        {/* CUADRÍCULA DE JUEGOS */}
+
         <section className="games-grid" style={{ flex: 3 }}>
           {filteredGames.length === 0 ? (
             <div style={{ padding: '40px', textAlign: 'center', background: 'var(--surface-color)', borderRadius: 'var(--border-radius)', border: '1px solid var(--border-color)' }}>

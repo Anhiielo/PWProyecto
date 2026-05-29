@@ -2,15 +2,18 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState(''); // Añadido estado para correo
+
+  const [email, setEmail] = useState(''); 
+  const [password, setPassword] = useState(''); 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username.trim() !== '') {
-      onLogin(username); // Seguimos pasando el nombre para mostrarlo en el NavBar
-      navigate('/'); // Redirección a la raíz
+
+    if (email.trim() !== '' && password.trim() !== '') {
+      const username = email.split('@')[0];
+      onLogin(username); 
+      navigate('/'); 
     }
   };
 
@@ -52,25 +55,26 @@ const Login = ({ onLogin }) => {
               placeholder="ejemplo@correo.com" 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{ width: '100%', boxSizing: 'border-box' }}
+              style={{ width: '100%', boxSizing: 'border-box', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+              required
             />
           </div>
 
           <div style={{ textAlign: 'left' }}>
             <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '500', color: 'var(--text-main)' }}>
-              Nombre de Usuario
+              Contraseña
             </label>
             <input 
-              type="text" 
-              placeholder="Ej: PlayerOne" 
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              style={{ width: '100%', boxSizing: 'border-box' }}
+              type="password" 
+              placeholder="Contraseña" 
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{ width: '100%', boxSizing: 'border-box', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
               required
             />
           </div>
 
-          <button type="submit" style={{ marginTop: '10px', width: '100%', padding: '12px' }}>
+          <button type="submit" style={{ marginTop: '10px', width: '100%', padding: '12px', cursor: 'pointer' }}>
             Iniciar Sesión
           </button>
           
