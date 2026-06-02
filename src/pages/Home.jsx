@@ -85,26 +85,26 @@ const Hero = ({ games }) => {
         zIndex: 0,
       }} />
 
-      {/* Gradiente izquierdo fuerte para texto legible — derecha queda limpia */}
+
       <div style={{
         position: 'absolute', inset: 0,
         background: 'linear-gradient(90deg, rgba(5,8,20,0.95) 0%, rgba(5,8,20,0.75) 38%, rgba(5,8,20,0.15) 65%, rgba(5,8,20,0.0) 80%)',
         zIndex: 1,
       }} />
-      {/* Gradiente superior leve */}
+
       <div style={{
         position: 'absolute', top: 0, left: 0, right: 0, height: '80px',
         background: 'linear-gradient(to bottom, rgba(5,8,20,0.5), transparent)',
         zIndex: 1,
       }} />
-      {/* Gradiente inferior */}
+
       <div style={{
         position: 'absolute', bottom: 0, left: 0, right: 0, height: '100px',
         background: 'linear-gradient(to top, rgba(5,8,20,0.85), transparent)',
         zIndex: 1,
       }} />
 
-      {/* Contenido */}
+
       <div style={{
         position: 'relative', zIndex: 2,
         height: '100%',
@@ -117,7 +117,7 @@ const Hero = ({ games }) => {
         opacity: fading ? 0 : 1,
         transition: 'opacity 0.3s ease',
       }}>
-        {/* Badge plataforma */}
+
         <span style={{
           display: 'inline-block',
           background: 'var(--primary-color)',
@@ -205,7 +205,6 @@ const Hero = ({ games }) => {
         </div>
       </div>
 
-      {/* Indicadores del carrusel */}
       {heroPool.length > 1 && (
         <div style={{
           position: 'absolute', bottom: '20px', right: '40px',
@@ -233,7 +232,7 @@ const Hero = ({ games }) => {
   );
 };
 
-/* ── Home principal ── */
+
 const Home = ({ games }) => {
   return (
     <div style={{ overflowX: 'hidden' }}>
@@ -241,7 +240,7 @@ const Home = ({ games }) => {
 
       <div className="home-container" style={{ paddingTop: 0 }}>
 
-        {/* ── PLATAFORMAS ── */}
+  
         <section style={{ marginBottom: '48px' }}>
           <h2 className="section-title">Elige tu Plataforma</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
@@ -275,8 +274,6 @@ const Home = ({ games }) => {
                     style={{
                       height: '46px',
                       objectFit: 'contain',
-                      // Solo aplica invert a logos que lo necesitan (blancos/negros)
-                      // Switch.webp ya viene en color, no invertir
                       filter: invertLogo ? 'brightness(0) invert(1)' : 'none',
                       opacity: 0.95,
                     }}
