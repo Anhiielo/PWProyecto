@@ -1,16 +1,90 @@
-# React + Vite
+# PeKeys Store — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tienda de videojuegos digitales construida con **React + Vite**. Repositorio independiente que consume una API REST externa (ver repositorio `PW-Back`).
 
-Currently, two official plugins are available:
+## Tecnologías
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Framework:** React 19
+- **Bundler:** Vite 8
+- **Routing:** React Router DOM v7
+- **HTTP:** Fetch API nativa (sin Axios ni librerías extra)
+- **Estilos:** CSS Variables + Vanilla CSS
 
-## React Compiler
+## Estructura del proyecto
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```
+PWProyecto/
+├── src/
+│   ├── App.jsx                   # Raíz: carga juegos desde API, maneja sesión y carrito
+│   ├── services/
+│   │   └── api.js                # Capa de servicio centralizada (todas las llamadas HTTP)
+│   ├── components/
+│   │   └── Navbar.jsx
+│   ├── pages/
+│   │   ├── Home.jsx              # Hero carousel + grid de juegos del backend
+│   │   ├── Catalog.jsx           # Catálogo con filtros (datos del backend)
+│   │   ├── GameDetails.jsx       # Detalle de producto
+│   │   ├── Login.jsx             # Autenticación contra POST /api/auth/login
+│   │   ├── Admin.jsx             # CRUD de juegos vía API (solo rol admin)
+│   │   ├── Cart.jsx              # Carrito + checkout vía POST /api/checkout
+│   │   ├── Library.jsx           # Biblioteca de product keys adquiridas
+│   │   └── Toast.jsx             # Notificación al agregar al carrito
+│   ├── mocks/
+│   │   └── games.js              # (Legacy — ya no se usa, reemplazado por la API)
+│   └── assets/                   # Logos de plataformas
+├── .env.local                    # VITE_API_URL (no se sube al repo)
+├── .env.example
+└── package.json
+```
 
-## Expanding the ESLint configuration
+## Instalación y uso
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# 1. Instalar dependencias
+npm install
+
+# 2. Crear archivo de entorno
+cp .env.example .env.local
+# o crear manualmente .env.local con:
+# VITE_API_URL=http://localhost:3000/api
+
+# 3. Iniciar el servidor de desarrollo
+npm run dev
+
+# La app queda disponible en:
+# http://localhost:5173
+```
+
+> ⚠️ **Importante:** El backend (`PW-Back`) debe estar corriendo en `http://localhost:3000` antes de abrir la app. Si no, aparecerá un banner de error de conexión.
+
+## Variables de entorno
+
+| Variable | Valor por defecto | Descripción |
+|----------|------------------|-------------|
+| `VITE_API_URL` | `http://localhost:3000/api` | URL base del backend |
+
+## Funcionalidades conectadas al backend
+
+| Página | Endpoint consumido |
+|--------|--------------------|
+| **Home / Catálogo** | `GET /api/games` |
+| **Detalle de juego** | Datos del array cargado en App.jsx |
+| **Login** | `POST /api/auth/login` |
+| **Panel Admin** | `POST`, `PUT`, `DELETE /api/games` |
+| **Checkout** | `POST /api/checkout` |
+
+## Usuarios de prueba
+
+| Email | Contraseña | Acceso |
+|-------|-----------|--------|
+| admin@pekeys.com | admin123 | Panel Admin + toda la app |
+| usuario1@pekeys.com | pass123 | Carrito + Biblioteca |
+
+## Scripts disponibles
+
+```bash
+npm run dev      # Servidor de desarrollo con HMR
+npm run build    # Build de producción en /dist
+npm run preview  # Vista previa del build de producción
+npm run lint     # ESLint
+```
