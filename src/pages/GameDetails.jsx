@@ -4,7 +4,7 @@ const GameDetails = ({ games, onAdd, currentUser }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   
-  const game = games.find(g => g.id === parseInt(id));
+  const game = games.find(g => String(g.id) === String(id));
 
   if (!game) {
     return <main style={{ padding: '40px', textAlign: 'center' }}>Juego no encontrado.</main>;

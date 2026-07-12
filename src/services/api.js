@@ -1,8 +1,21 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
+const getToken = () => localStorage.getItem('pekeys-token');
+
 const request = async (path, options = {}) => {
+  const token = getToken();
+  const headers = {
+    'Content-Type': 'application/json',
+    ...options.headers,
+  };
+
+  // Agregar token de autenticación si existe
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+
   const res = await fetch(`${API_URL}${path}`, {
-    headers: { 'Content-Type': 'application/json', ...options.headers },
+    headers,
     ...options,
   });
   const data = await res.json();
@@ -30,6 +43,9 @@ export const deleteGame = (id) =>
 // ─── AUTH ─────────────────────────────────────────────────────────────────────
 export const login = (email, password) =>
   request('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+
+export const register = (username, email, password) =>
+  request('/auth/register', { method: 'POST', body: JSON.stringify({ username, email, password }) });
 
 // ─── CHECKOUT ─────────────────────────────────────────────────────────────────
 export const checkout = (items) =>

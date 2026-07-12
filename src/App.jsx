@@ -1,6 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import './App.css';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import Toast from './pages/Toast';
 import Home from './pages/Home';
@@ -12,11 +14,8 @@ import Admin from './pages/Admin';
 import GameDetails from './pages/GameDetails';
 import * as api from './services/api';
 
-const App = () => {
-  const [currentUser, setCurrentUser] = useState(() => {
-    const saved = window.localStorage.getItem('pekeys-user');
-    return saved ? JSON.parse(saved) : null;
-  });
+const AppContent = () => {
+  const { currentUser, logout } = useAuth();
   const [cart, setCart] = useState([]);
   const [purchasedKeys, setPurchasedKeys] = useState([]);
   const [toast, setToast] = useState(null);
@@ -36,16 +35,14 @@ const App = () => {
       .finally(() => setLoadingGames(false));
   }, []);
 
-  // ── Persistencia de sesión y carrito en localStorage ─────────────────────
+  // ── Persistencia de carrito y biblioteca en localStorage ──────────────────
   useEffect(() => {
     if (currentUser) {
-      window.localStorage.setItem('pekeys-user', JSON.stringify(currentUser));
-      const savedCart    = window.localStorage.getItem(`pekeys-cart-${currentUser.username}`);
-      const savedLibrary = window.localStorage.getItem(`pekeys-library-${currentUser.username}`);
+      const savedCart    = localStorage.getItem(`pekeys-cart-${currentUser.username}`);
+      const savedLibrary = localStorage.getItem(`pekeys-library-${currentUser.username}`);
       setCart(savedCart    ? JSON.parse(savedCart)    : []);
       setPurchasedKeys(savedLibrary ? JSON.parse(savedLibrary) : []);
     } else {
-      window.localStorage.removeItem('pekeys-user');
       setCart([]);
       setPurchasedKeys([]);
     }
@@ -53,20 +50,17 @@ const App = () => {
 
   useEffect(() => {
     if (currentUser) {
-      window.localStorage.setItem(`pekeys-cart-${currentUser.username}`, JSON.stringify(cart));
+      localStorage.setItem(`pekeys-cart-${currentUser.username}`, JSON.stringify(cart));
     }
   }, [cart, currentUser]);
 
   useEffect(() => {
     if (currentUser) {
-      window.localStorage.setItem(`pekeys-library-${currentUser.username}`, JSON.stringify(purchasedKeys));
+      localStorage.setItem(`pekeys-library-${currentUser.username}`, JSON.stringify(purchasedKeys));
     }
   }, [purchasedKeys, currentUser]);
 
   // ── Handlers ──────────────────────────────────────────────────────────────
-  const handleLogin  = (user) => setCurrentUser(user);
-  const handleLogout = ()     => setCurrentUser(null);
-
   const addToCart = (game) => {
     setCart(prev => [...prev, game]);
     setToast({ message: game.title, imageUrl: game.imageUrl });
@@ -75,7 +69,6 @@ const App = () => {
   const clearCart       = ()    => setCart([]);
   const addPurchasedKeys = (newKeys) => setPurchasedKeys(prev => [...prev, ...newKeys]);
 
-  // ── setGames con callback para Admin (operaciones CRUD sobre la API) ──────
   const handleSetGames = (updater) => {
     setGames(typeof updater === 'function' ? updater : () => updater);
   };
@@ -93,8 +86,8 @@ const App = () => {
   ) : null;
 
   return (
-    <BrowserRouter>
-      <Navbar cartCount={cart.length} currentUser={currentUser?.username} onLogout={handleLogout} />
+    <>
+      <Navbar cartCount={cart.length} currentUser={currentUser?.username} onLogout={logout} />
       <ErrorBanner />
 
       {loadingGames ? (
@@ -107,18 +100,18 @@ const App = () => {
         <Routes>
           <Route path="/"        element={<Home games={games} />} />
           <Route path="/catalog" element={<Catalog games={games} onAdd={addToCart} currentUser={currentUser?.username} />} />
-          <Route path="/login"   element={<Login onLogin={handleLogin} />} />
+          <Route path="/login"   element={<Login />} />
           <Route path="/admin"   element={<Admin games={games} setGames={handleSetGames} currentUser={currentUser?.username} />} />
           <Route path="/game/:id" element={<GameDetails games={games} onAdd={addToCart} currentUser={currentUser?.username} />} />
           <Route path="/cart"    element={
-            currentUser
-              ? <Cart cartItems={cart} onRemove={removeFromCart} onClear={clearCart} onCompletePurchase={addPurchasedKeys} />
-              : <Navigate to="/login" />
+            <ProtectedRoute>
+              <Cart cartItems={cart} onRemove={removeFromCart} onClear={clearCart} onCompletePurchase={addPurchasedKeys} />
+            </ProtectedRoute>
           } />
           <Route path="/library" element={
-            currentUser
-              ? <Library purchasedKeys={purchasedKeys} />
-              : <Navigate to="/login" />
+            <ProtectedRoute>
+              <Library purchasedKeys={purchasedKeys} />
+            </ProtectedRoute>
           } />
         </Routes>
       )}
@@ -126,6 +119,16 @@ const App = () => {
       {toast && (
         <Toast message={toast.message} imageUrl={toast.imageUrl} onDone={() => setToast(null)} />
       )}
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </BrowserRouter>
   );
 };
