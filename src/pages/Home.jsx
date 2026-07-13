@@ -301,36 +301,29 @@ const GamesRow = ({ title, games }) => {
             onClick={scrollLeftAction}
             style={{
               position: 'absolute',
-              left: '-20px',
+              left: '-30px',
               top: '50%',
               transform: 'translateY(-50%)',
               zIndex: 10,
-              background: 'rgba(15, 23, 42, 0.85)',
-              border: '2px solid var(--border-color)',
-              color: 'white',
-              borderRadius: '50%',
-              width: '48px',
-              height: '48px',
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--text-muted)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.8)',
-              backdropFilter: 'blur(8px)',
-              transition: 'border-color 0.2s, background 0.2s, transform 0.2s',
+              transition: 'color 0.2s, transform 0.2s',
             }}
             onMouseEnter={e => {
-              e.currentTarget.style.borderColor = 'var(--primary-color)';
-              e.currentTarget.style.background = 'var(--surface-color)';
-              e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+              e.currentTarget.style.color = 'var(--primary-color)';
+              e.currentTarget.style.transform = 'translateY(-50%) scale(1.2)';
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.borderColor = 'var(--border-color)';
-              e.currentTarget.style.background = 'rgba(15, 23, 42, 0.85)';
+              e.currentTarget.style.color = 'var(--text-muted)';
               e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
             }}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
           </button>
         )}
 
@@ -360,36 +353,29 @@ const GamesRow = ({ title, games }) => {
             onClick={scrollRightAction}
             style={{
               position: 'absolute',
-              right: '-20px',
+              right: '-30px',
               top: '50%',
               transform: 'translateY(-50%)',
               zIndex: 10,
-              background: 'rgba(15, 23, 42, 0.85)',
-              border: '2px solid var(--border-color)',
-              color: 'white',
-              borderRadius: '50%',
-              width: '48px',
-              height: '48px',
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--text-muted)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.8)',
-              backdropFilter: 'blur(8px)',
-              transition: 'border-color 0.2s, background 0.2s, transform 0.2s',
+              transition: 'color 0.2s, transform 0.2s',
             }}
             onMouseEnter={e => {
-              e.currentTarget.style.borderColor = 'var(--primary-color)';
-              e.currentTarget.style.background = 'var(--surface-color)';
-              e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+              e.currentTarget.style.color = 'var(--primary-color)';
+              e.currentTarget.style.transform = 'translateY(-50%) scale(1.2)';
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.borderColor = 'var(--border-color)';
-              e.currentTarget.style.background = 'rgba(15, 23, 42, 0.85)';
+              e.currentTarget.style.color = 'var(--text-muted)';
               e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
             }}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
         )}
       </div>
