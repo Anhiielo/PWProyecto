@@ -294,14 +294,14 @@ const GamesRow = ({ title, games }) => {
         </div>
       </div>
 
-      <div style={{ position: 'relative' }}>
+      <div className="games-carousel-wrapper">
         {/* Flecha Izquierda */}
         {showLeft && (
           <button 
             onClick={scrollLeftAction}
             style={{
               position: 'absolute',
-              left: '-30px',
+              left: '0',
               top: '50%',
               transform: 'translateY(-50%)',
               zIndex: 10,
@@ -353,7 +353,7 @@ const GamesRow = ({ title, games }) => {
             onClick={scrollRightAction}
             style={{
               position: 'absolute',
-              right: '-30px',
+              right: '0',
               top: '50%',
               transform: 'translateY(-50%)',
               zIndex: 10,

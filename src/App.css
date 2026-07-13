@@ -283,12 +283,17 @@
 }
 
 /* Carrusel Horizontal (Estilo Netflix) */
+.games-carousel-wrapper {
+  margin: 0 -40px;
+  position: relative;
+}
+
 .games-carousel {
   display: flex;
   gap: 20px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding-bottom: 20px;
+  padding: 0 40px 20px 40px;
   /* Ocultar barra de scroll en Firefox */
   scrollbar-width: none;
 }
