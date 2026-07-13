@@ -35,13 +35,16 @@ const AppContent = () => {
       .finally(() => setLoadingGames(false));
   }, []);
 
-  // ── Persistencia de carrito y biblioteca en localStorage ──────────────────
+  // ── Persistencia de carrito y carga de biblioteca ──────────────────
   useEffect(() => {
     if (currentUser) {
-      const savedCart    = localStorage.getItem(`pekeys-cart-${currentUser.username}`);
-      const savedLibrary = localStorage.getItem(`pekeys-library-${currentUser.username}`);
-      setCart(savedCart    ? JSON.parse(savedCart)    : []);
-      setPurchasedKeys(savedLibrary ? JSON.parse(savedLibrary) : []);
+      const savedCart = localStorage.getItem(`pekeys-cart-${currentUser.username}`);
+      setCart(savedCart ? JSON.parse(savedCart) : []);
+
+      // Cargar biblioteca desde la base de datos real
+      api.getLibrary()
+        .then(data => setPurchasedKeys(data))
+        .catch(err => console.error('Error cargando biblioteca:', err));
     } else {
       setCart([]);
       setPurchasedKeys([]);
@@ -53,12 +56,6 @@ const AppContent = () => {
       localStorage.setItem(`pekeys-cart-${currentUser.username}`, JSON.stringify(cart));
     }
   }, [cart, currentUser]);
-
-  useEffect(() => {
-    if (currentUser) {
-      localStorage.setItem(`pekeys-library-${currentUser.username}`, JSON.stringify(purchasedKeys));
-    }
-  }, [purchasedKeys, currentUser]);
 
   // ── Handlers ──────────────────────────────────────────────────────────────
   const addToCart = (game) => {

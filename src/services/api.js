@@ -50,3 +50,5 @@ export const register = (username, email, password) =>
 // ─── CHECKOUT ─────────────────────────────────────────────────────────────────
 export const checkout = (items) =>
   request('/checkout', { method: 'POST', body: JSON.stringify({ items }) });
+
+export const getLibrary = () => request('/checkout/library');
