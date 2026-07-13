@@ -8,9 +8,8 @@
 /* Contenedores para evitar que choquen con los bordes en pantallas muy grandes */
 .home-container, .catalog-container {
   width: 100%;
-  max-width: 1400px;
   margin: 0 auto; 
-  padding: 40px 20px;
+  padding: 40px 60px; /* Más alejado del borde pero expandiéndose por toda la pantalla */
   box-sizing: border-box;
 }
 
