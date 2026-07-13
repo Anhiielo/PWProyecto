@@ -9,7 +9,7 @@
 .home-container, .catalog-container {
   width: 100%;
   margin: 0 auto; 
-  padding: 40px 60px; /* Más alejado del borde pero expandiéndose por toda la pantalla */
+  padding: 40px 40px; /* Ancho intermedio */
   box-sizing: border-box;
 }
 

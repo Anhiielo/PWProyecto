@@ -134,11 +134,7 @@ const Login = () => {
           </button>
         </div>
 
-        <div style={{ marginTop: '20px', padding: '12px', background: '#f8fafc', borderRadius: '6px', fontSize: '13px', color: 'var(--text-muted)', textAlign: 'left' }}>
-          <strong>Usuarios de prueba:</strong><br />
-          🔑 admin@pekeys.com / admin123 (admin)<br />
-          🔑 usuario1@pekeys.com / pass123 (usuario)
-        </div>
+
       </div>
     </main>
   );
