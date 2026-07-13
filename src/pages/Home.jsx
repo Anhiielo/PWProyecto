@@ -232,8 +232,61 @@ const Hero = ({ games }) => {
   );
 };
 
+/* ── Componente Fila de Juegos (Estilo Netflix) ── */
+const GamesRow = ({ title, games }) => {
+  if (!games || games.length === 0) return null;
+  return (
+    <section style={{ marginBottom: '48px' }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: '20px',
+        paddingBottom: '12px',
+        borderBottom: '2px solid var(--border-color)',
+      }}>
+        <h2 style={{ margin: 0, fontSize: '22px', fontWeight: 700 }}>{title}</h2>
+        <span style={{
+          color: 'var(--text-muted)',
+          fontSize: '13px',
+          background: 'rgba(255,255,255,0.1)',
+          padding: '4px 12px',
+          borderRadius: '20px',
+          fontWeight: 600,
+        }}>
+          {games.length} títulos
+        </span>
+      </div>
+      <div className="games-carousel">
+        {games.map(game => (
+          <article key={game.id} className="game-card-simple">
+            <img src={game.imageUrl} alt={game.title} className="game-card-img" />
+            <div className="game-card-info">
+              <p className="game-card-title">{game.title}</p>
+              <span className={`game-card-platform ${getPlatformClass(game.platform)}`}>
+                {game.platform}
+              </span>
+              <p className="game-card-price">S/ {game.price.toFixed(2)}</p>
+            </div>
+            <div style={{ padding: '0 16px 16px 16px' }}>
+              <Link to={`/game/${game.id}`} style={{ textDecoration: 'none' }}>
+                <button className="add-button btn-secondary">Ver Detalles</button>
+              </Link>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+};
+
 
 const Home = ({ games }) => {
+  const categories = useMemo(() => {
+    const cats = new Set(games.map(g => g.category).filter(Boolean));
+    return Array.from(cats).sort();
+  }, [games]);
+
   return (
     <div style={{ overflowX: 'hidden' }}>
       <Hero games={games} />
@@ -287,49 +340,13 @@ const Home = ({ games }) => {
           </div>
         </section>
 
-        {/* ── TODOS LOS JUEGOS ── */}
-        <section style={{ marginBottom: '60px' }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: '20px',
-            paddingBottom: '12px',
-            borderBottom: '2px solid var(--border-color)',
-          }}>
-            <h2 style={{ margin: 0, fontSize: '22px', fontWeight: 700 }}>Todos los Juegos</h2>
-            <span style={{
-              color: 'var(--text-muted)',
-              fontSize: '13px',
-              background: 'rgba(255,255,255,0.1)',
-              padding: '4px 12px',
-              borderRadius: '20px',
-              fontWeight: 600,
-            }}>
-              {games.length} títulos
-            </span>
-          </div>
+        {/* ── CARROUSEL PRINCIPAL ── */}
+        <GamesRow title="Todos los Juegos" games={games} />
 
-          <div className="games-grid">
-            {games.map(game => (
-              <article key={game.id} className="game-card-simple">
-                <img src={game.imageUrl} alt={game.title} className="game-card-img" />
-                <div className="game-card-info">
-                  <p className="game-card-title">{game.title}</p>
-                  <span className={`game-card-platform ${getPlatformClass(game.platform)}`}>
-                    {game.platform}
-                  </span>
-                  <p className="game-card-price">S/ {game.price.toFixed(2)}</p>
-                </div>
-                <div style={{ padding: '0 16px 16px 16px' }}>
-                  <Link to={`/game/${game.id}`} style={{ textDecoration: 'none' }}>
-                    <button className="add-button btn-secondary">Ver Detalles</button>
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+        {/* ── CARROUSELES POR CATEGORÍA ── */}
+        {categories.map(cat => (
+          <GamesRow key={cat} title={`Juegos de ${cat}`} games={games.filter(g => g.category === cat)} />
+        ))}
 
         <footer className="home-footer">
           <p>&copy; 2026 PeKeys Store. Todos los derechos reservados. Compras 100% seguras y confiables.</p>

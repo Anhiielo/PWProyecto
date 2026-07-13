@@ -274,6 +274,26 @@
   gap: 24px;
 }
 
+/* Carrusel Horizontal (Estilo Netflix) */
+.games-carousel {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+  /* Ocultar barra de scroll en Firefox */
+  scrollbar-width: none;
+}
+/* Ocultar barra de scroll en Webkit */
+.games-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.games-carousel .game-card-simple {
+  flex: 0 0 260px;
+  scroll-snap-align: start;
+}
+
 .game-card-simple {
   background-color: var(--surface-color);
   border: 1px solid var(--border-color);
@@ -312,6 +332,13 @@
   font-weight: 600;
   margin: 0 0 10px 0;
   color: var(--text-main);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 52px; /* Espacio para 2 líneas */
+  line-height: 1.4;
 }
 
 .game-card-platform {
@@ -320,6 +347,7 @@
   padding: 4px 10px;
   font-size: 12px;
   font-weight: 600;
+  margin-top: auto;
   margin-bottom: 15px;
   width: fit-content;
   color: #fff;
@@ -334,7 +362,7 @@
   font-size: 22px;
   font-weight: 700;
   color: var(--text-main);
-  margin: auto 0 15px 0;
+  margin: 0 0 15px 0;
 }
 
 .add-button {
