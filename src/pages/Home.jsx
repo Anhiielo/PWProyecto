@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 
 // Logos de plataforma — ajusta la ruta si difiere en tu proyecto
 import logoPS from '../assets/PlayStation.png';
@@ -234,47 +234,127 @@ const Hero = ({ games }) => {
 
 /* ── Componente Fila de Juegos (Estilo Netflix) ── */
 const GamesRow = ({ title, games }) => {
+  const carouselRef = useRef(null);
+
   if (!games || games.length === 0) return null;
+
+  const scrollLeft = () => {
+    if (carouselRef.current) carouselRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+  };
+  const scrollRight = () => {
+    if (carouselRef.current) carouselRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+  };
+
   return (
-    <section style={{ marginBottom: '48px' }}>
+    <section style={{ marginBottom: '60px' }}>
       <div style={{
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: '20px',
-        paddingBottom: '12px',
-        borderBottom: '2px solid var(--border-color)',
+        marginBottom: '24px',
+        paddingBottom: '16px',
+        borderBottom: '1px solid rgba(193,18,31,0.2)',
       }}>
-        <h2 style={{ margin: 0, fontSize: '22px', fontWeight: 700 }}>{title}</h2>
+        <h2 style={{ 
+          margin: '0 0 10px 0', 
+          fontSize: '28px', 
+          fontWeight: 800, 
+          textTransform: 'uppercase', 
+          letterSpacing: '1px',
+          textShadow: '0 0 15px rgba(193,18,31,0.5)',
+          textAlign: 'center'
+        }}>{title}</h2>
         <span style={{
           color: 'var(--text-muted)',
           fontSize: '13px',
-          background: 'rgba(255,255,255,0.1)',
-          padding: '4px 12px',
+          background: 'rgba(255,255,255,0.05)',
+          border: '1px solid var(--border-color)',
+          padding: '4px 16px',
           borderRadius: '20px',
           fontWeight: 600,
         }}>
-          {games.length} títulos
+          {games.length} títulos disponibles
         </span>
       </div>
-      <div className="games-carousel">
-        {games.map(game => (
-          <article key={game.id} className="game-card-simple">
-            <img src={game.imageUrl} alt={game.title} className="game-card-img" />
-            <div className="game-card-info">
-              <p className="game-card-title">{game.title}</p>
-              <span className={`game-card-platform ${getPlatformClass(game.platform)}`}>
-                {game.platform}
-              </span>
-              <p className="game-card-price">S/ {game.price.toFixed(2)}</p>
-            </div>
-            <div style={{ padding: '0 16px 16px 16px' }}>
-              <Link to={`/game/${game.id}`} style={{ textDecoration: 'none' }}>
-                <button className="add-button btn-secondary">Ver Detalles</button>
-              </Link>
-            </div>
-          </article>
-        ))}
+
+      <div style={{ position: 'relative' }}>
+        {/* Flecha Izquierda */}
+        <button 
+          onClick={scrollLeft}
+          style={{
+            position: 'absolute',
+            left: '-15px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: 10,
+            background: 'var(--surface-color)',
+            border: '1px solid var(--border-color)',
+            color: 'white',
+            borderRadius: '50%',
+            width: '44px',
+            height: '44px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.8)',
+            fontSize: '24px',
+            paddingBottom: '4px'
+          }}
+          onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--primary-color)'}
+          onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-color)'}
+        >
+          &#8249;
+        </button>
+
+        <div className="games-carousel" ref={carouselRef}>
+          {games.map(game => (
+            <article key={game.id} className="game-card-simple">
+              <img src={game.imageUrl} alt={game.title} className="game-card-img" />
+              <div className="game-card-info">
+                <p className="game-card-title">{game.title}</p>
+                <span className={`game-card-platform ${getPlatformClass(game.platform)}`}>
+                  {game.platform}
+                </span>
+                <p className="game-card-price">S/ {game.price.toFixed(2)}</p>
+              </div>
+              <div style={{ padding: '0 16px 16px 16px' }}>
+                <Link to={`/game/${game.id}`} style={{ textDecoration: 'none' }}>
+                  <button className="add-button btn-secondary">Ver Detalles</button>
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Flecha Derecha */}
+        <button 
+          onClick={scrollRight}
+          style={{
+            position: 'absolute',
+            right: '-15px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: 10,
+            background: 'var(--surface-color)',
+            border: '1px solid var(--border-color)',
+            color: 'white',
+            borderRadius: '50%',
+            width: '44px',
+            height: '44px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.8)',
+            fontSize: '24px',
+            paddingBottom: '4px'
+          }}
+          onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--primary-color)'}
+          onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-color)'}
+        >
+          &#8250;
+        </button>
       </div>
     </section>
   );
