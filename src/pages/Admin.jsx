@@ -166,7 +166,7 @@ const Admin = ({ games, setGames, currentUser }) => {
                       <span style={{ fontWeight: 'bold', color: 'var(--primary-color)' }}>S/ {game.price.toFixed(2)}</span>
                     </div>
                     <div style={{ display: 'flex', gap: '10px' }}>
-                      <button onClick={() => handleEditClick(game)} style={{ background: '#3b82f6', padding: '6px 12px', fontSize: '13px', color: 'white', border: 'none', borderRadius: '4px' }}>Editar</button>
+                      <button onClick={() => handleEditClick(game)} style={{ background: 'var(--primary-color)', padding: '6px 12px', fontSize: '13px', color: 'white', border: 'none', borderRadius: '4px' }}>Editar</button>
                       <button
                         onClick={() => handleDeleteGame(game.id)}
                         disabled={loadingAction === `delete-${game.id}`}

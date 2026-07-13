@@ -301,7 +301,7 @@ const Home = ({ games }) => {
             <span style={{
               color: 'var(--text-muted)',
               fontSize: '13px',
-              background: '#f1f5f9',
+              background: 'rgba(255,255,255,0.1)',
               padding: '4px 12px',
               borderRadius: '20px',
               fontWeight: 600,

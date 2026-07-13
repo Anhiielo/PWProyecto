@@ -1,6 +1,6 @@
 :root {
-  --primary-color: #3b82f6; 
-  --primary-hover: #2563eb;
+  --primary-color: #c1121f; 
+  --primary-hover: #9e0e18;
   --bg-color: #0f172a; 
   --surface-color: #1e293b; 
   --text-main: #f8fafc;
@@ -10,7 +10,7 @@
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
   --shadow-sm: 0 4px 6px -1px rgba(0,0,0,0.3);
   --shadow-md: 0 10px 15px -3px rgba(0,0,0,0.4);
-  --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.4);
+  --shadow-glow: 0 0 20px rgba(193, 18, 31, 0.4);
 }
 
 body {
@@ -58,7 +58,7 @@ input, select {
 
 input:focus, select:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.2);
 }
 
 button {

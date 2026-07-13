@@ -191,7 +191,7 @@ const Catalog = ({ games, onAdd, currentUser }) => {
                     <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginBottom: '10px' }}>
                       <span className={`game-card-platform ${getPlatformClass(game.platform)}`}>{game.platform}</span>
                       {game.category && (
-                        <span style={{ borderRadius: '4px', display: 'inline-block', padding: '4px 10px', fontSize: '12px', fontWeight: 600, background: '#f1f5f9', color: 'var(--text-muted)' }}>
+                        <span style={{ borderRadius: '4px', display: 'inline-block', padding: '4px 10px', fontSize: '12px', fontWeight: 600, background: 'rgba(255,255,255,0.1)', color: 'var(--text-muted)' }}>
                           {game.category}
                         </span>
                       )}

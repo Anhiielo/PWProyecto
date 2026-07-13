@@ -3,103 +3,7 @@
    ========================================= */
 /* Variables now defined globally in index.css */
 
-/* =========================================
-   RESETEO Y LAYOUT PRINCIPAL
-   ========================================= */
-body {
-  font-family: var(--font-family);
-  margin: 0;
-  padding: 0;
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  line-height: 1.6;
-}
-
-#root {
-  width: 100%; 
-  max-width: 100%;
-  margin: 0; 
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  overflow-x: hidden; 
-}
-
-/* Contenedores centrados para el contenido */
-.home-container, 
-.catalog-container, 
-.game-details-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto; 
-  padding: 40px 20px;
-  box-sizing: border-box;
-}
-
-/* =========================================
-   TIPOGRAFÍA Y ELEMENTOS BÁSICOS
-   ========================================= */
-h1, h2, h3, h4 {
-  font-weight: 600;
-  color: var(--text-main);
-  margin-top: 0;
-}
-
-p {
-  color: var(--text-muted);
-}
-
-input, select, textarea {
-  font-family: var(--font-family);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 10px 14px;
-  font-size: 15px;
-  background-color: var(--surface-color);
-  color: var(--text-main);
-  outline: none;
-}
-
-input:focus, select:focus, textarea:focus {
-  border-color: var(--primary-color);
-}
-
-button {
-  font-family: var(--font-family);
-  border: 1px solid transparent;
-  border-radius: var(--border-radius);
-  background-color: var(--primary-color);
-  color: #fff;
-  cursor: pointer;
-  padding: 10px 20px;
-  font-weight: 500;
-  font-size: 15px;
-  transition: background-color 0.2s ease; 
-}
-
-button:hover {
-  background-color: var(--primary-hover);
-}
-
-a {
-  color: var(--primary-color);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-.btn-secondary {
-  background-color: #f1f5f9;
-  color: var(--text-main);
-  border: 1px solid var(--border-color);
-}
-
-.btn-secondary:hover {
-  background-color: #e2e8f0;
-}
+/* Removed duplicated base styles since index.css already handles them properly for dark theme */
 
 /* =========================================
    NAVBAR (HEADER Y BÚSQUEDA)
@@ -374,7 +278,7 @@ a:hover {
 .game-card-simple:hover {
   transform: translateY(-4px);
   border-color: var(--primary-color);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.6), 0 0 15px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6), 0 0 15px rgba(193, 18, 31, 0.3);
 }
 
 .game-card-img {
@@ -514,7 +418,7 @@ a:hover {
 .gd-features-list p {
   margin: 4px 0 0 0;
   font-size: 13px;
-  color: #3b82f6;
+  color: var(--primary-color);
   cursor: pointer;
 }
 .gd-description h3 {
@@ -553,14 +457,15 @@ a:hover {
 }
 .gd-btn-add {
   width: 100%;
-  background-color: #2563eb;
+  background-color: var(--primary-color);
+  color: #fff;
   padding: 14px;
   font-size: 16px;
   border-radius: 6px;
   margin-bottom: 10px;
 }
 .gd-btn-add:hover {
-  background-color: #1d4ed8;
+  background-color: var(--primary-hover);
 }
 .gd-btn-paypal {
   width: 100%;
