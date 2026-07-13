@@ -235,13 +235,29 @@ const Hero = ({ games }) => {
 /* ── Componente Fila de Juegos (Estilo Netflix) ── */
 const GamesRow = ({ title, games }) => {
   const carouselRef = useRef(null);
+  const [showLeft, setShowLeft] = useState(false);
+  const [showRight, setShowRight] = useState(false);
+
+  const checkScroll = () => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+      setShowLeft(scrollLeft > 0);
+      setShowRight(Math.ceil(scrollLeft + clientWidth) < scrollWidth - 2); // tolerancia de 2px
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener('resize', checkScroll);
+    return () => window.removeEventListener('resize', checkScroll);
+  }, [games]);
 
   if (!games || games.length === 0) return null;
 
-  const scrollLeft = () => {
+  const scrollLeftAction = () => {
     if (carouselRef.current) carouselRef.current.scrollBy({ left: -320, behavior: 'smooth' });
   };
-  const scrollRight = () => {
+  const scrollRightAction = () => {
     if (carouselRef.current) carouselRef.current.scrollBy({ left: 320, behavior: 'smooth' });
   };
 
@@ -249,65 +265,76 @@ const GamesRow = ({ title, games }) => {
     <section style={{ marginBottom: '60px' }}>
       <div style={{
         display: 'flex',
-        flexDirection: 'column',
         alignItems: 'center',
+        justifyContent: 'space-between',
         marginBottom: '24px',
-        paddingBottom: '16px',
-        borderBottom: '1px solid rgba(193,18,31,0.2)',
+        paddingLeft: '16px',
+        borderLeft: '5px solid var(--primary-color)',
       }}>
-        <h2 style={{ 
-          margin: '0 0 10px 0', 
-          fontSize: '28px', 
-          fontWeight: 800, 
-          textTransform: 'uppercase', 
-          letterSpacing: '1px',
-          textShadow: '0 0 15px rgba(193,18,31,0.5)',
-          textAlign: 'center'
-        }}>{title}</h2>
-        <span style={{
-          color: 'var(--text-muted)',
-          fontSize: '13px',
-          background: 'rgba(255,255,255,0.05)',
-          border: '1px solid var(--border-color)',
-          padding: '4px 16px',
-          borderRadius: '20px',
-          fontWeight: 600,
-        }}>
-          {games.length} títulos disponibles
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <h2 style={{ 
+            margin: '0', 
+            fontSize: '26px', 
+            fontWeight: 800, 
+            textTransform: 'uppercase', 
+            letterSpacing: '1px',
+            textShadow: '0 0 15px rgba(193,18,31,0.4)',
+          }}>{title}</h2>
+          <span style={{
+            color: 'var(--text-muted)',
+            fontSize: '13px',
+            background: 'rgba(255,255,255,0.05)',
+            border: '1px solid var(--border-color)',
+            padding: '4px 12px',
+            borderRadius: '20px',
+            fontWeight: 600,
+          }}>
+            {games.length} títulos
+          </span>
+        </div>
       </div>
 
       <div style={{ position: 'relative' }}>
         {/* Flecha Izquierda */}
-        <button 
-          onClick={scrollLeft}
-          style={{
-            position: 'absolute',
-            left: '-15px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 10,
-            background: 'var(--surface-color)',
-            border: '1px solid var(--border-color)',
-            color: 'white',
-            borderRadius: '50%',
-            width: '44px',
-            height: '44px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.8)',
-            fontSize: '24px',
-            paddingBottom: '4px'
-          }}
-          onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--primary-color)'}
-          onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-color)'}
-        >
-          &#8249;
-        </button>
+        {showLeft && (
+          <button 
+            onClick={scrollLeftAction}
+            style={{
+              position: 'absolute',
+              left: '-20px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              zIndex: 10,
+              background: 'rgba(15, 23, 42, 0.85)',
+              border: '2px solid var(--border-color)',
+              color: 'white',
+              borderRadius: '50%',
+              width: '48px',
+              height: '48px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.8)',
+              backdropFilter: 'blur(8px)',
+              transition: 'border-color 0.2s, background 0.2s, transform 0.2s',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = 'var(--primary-color)';
+              e.currentTarget.style.background = 'var(--surface-color)';
+              e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = 'var(--border-color)';
+              e.currentTarget.style.background = 'rgba(15, 23, 42, 0.85)';
+              e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+        )}
 
-        <div className="games-carousel" ref={carouselRef}>
+        <div className="games-carousel" ref={carouselRef} onScroll={checkScroll}>
           {games.map(game => (
             <article key={game.id} className="game-card-simple">
               <img src={game.imageUrl} alt={game.title} className="game-card-img" />
@@ -328,33 +355,43 @@ const GamesRow = ({ title, games }) => {
         </div>
 
         {/* Flecha Derecha */}
-        <button 
-          onClick={scrollRight}
-          style={{
-            position: 'absolute',
-            right: '-15px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 10,
-            background: 'var(--surface-color)',
-            border: '1px solid var(--border-color)',
-            color: 'white',
-            borderRadius: '50%',
-            width: '44px',
-            height: '44px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            boxShadow: '0 4px 15px rgba(0,0,0,0.8)',
-            fontSize: '24px',
-            paddingBottom: '4px'
-          }}
-          onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--primary-color)'}
-          onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border-color)'}
-        >
-          &#8250;
-        </button>
+        {showRight && (
+          <button 
+            onClick={scrollRightAction}
+            style={{
+              position: 'absolute',
+              right: '-20px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              zIndex: 10,
+              background: 'rgba(15, 23, 42, 0.85)',
+              border: '2px solid var(--border-color)',
+              color: 'white',
+              borderRadius: '50%',
+              width: '48px',
+              height: '48px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.8)',
+              backdropFilter: 'blur(8px)',
+              transition: 'border-color 0.2s, background 0.2s, transform 0.2s',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.borderColor = 'var(--primary-color)';
+              e.currentTarget.style.background = 'var(--surface-color)';
+              e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.borderColor = 'var(--border-color)';
+              e.currentTarget.style.background = 'rgba(15, 23, 42, 0.85)';
+              e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        )}
       </div>
     </section>
   );
