@@ -1,19 +1,7 @@
 /* =========================================
    VARIABLES Y COLORES BASE (MARCA PEKEYS)
    ========================================= */
-:root {
-  --primary-color: #c1121f; 
-  --primary-hover: #9e0e18; 
-  --accent-color: #d4af37; 
-  
-  --bg-color: #f8fafc; 
-  --surface-color: #ffffff; 
-  --text-main: #172554; 
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
-  --border-radius: 8px;
-  --font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-}
+/* Variables now defined globally in index.css */
 
 /* =========================================
    RESETEO Y LAYOUT PRINCIPAL
@@ -120,13 +108,15 @@ a:hover {
   display: flex;
   justify-content: space-between;
   padding: 10px 40px;
-  background-color: #0f172a; 
+  background-color: rgba(15, 23, 42, 0.75); 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  border-bottom: 3px solid var(--primary-color); 
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
   width: 100vw; 
   box-sizing: border-box;
   gap: 30px; 
@@ -382,8 +372,9 @@ a:hover {
 }
 
 .game-card-simple:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   border-color: var(--primary-color);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6), 0 0 15px rgba(59, 130, 246, 0.2);
 }
 
 .game-card-img {
@@ -485,13 +476,14 @@ a:hover {
   height: 80px;
   border-radius: 6px;
   object-fit: cover;
-  background: #e2e8f0;
+  background: rgba(255,255,255,0.05);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  color: #64748b;
+  color: var(--text-muted);
   cursor: pointer;
+  border: 1px solid var(--border-color);
 }
 
 /* Columna Centro (Info) */

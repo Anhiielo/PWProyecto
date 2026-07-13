@@ -89,13 +89,14 @@ const Catalog = ({ games, onAdd, currentUser }) => {
         {/* Contador siempre visible, pegado al final */}
         <span style={{
           marginLeft: 'auto',
-          background: '#f1f5f9',
-          color: 'var(--text-muted)',
+          background: 'rgba(255, 255, 255, 0.1)',
+          color: 'var(--text-main)',
           borderRadius: '20px',
           padding: '4px 12px',
           fontSize: '13px',
           fontWeight: 600,
           whiteSpace: 'nowrap',
+          border: '1px solid rgba(255, 255, 255, 0.05)'
         }}>
           {filteredGames.length} {filteredGames.length === 1 ? 'resultado' : 'resultados'}
         </span>

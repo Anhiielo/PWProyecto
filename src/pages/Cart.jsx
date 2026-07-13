@@ -124,7 +124,7 @@ const Cart = ({ cartItems, onRemove, onClear, onCompletePurchase }) => {
           </div>
 
           {error && (
-            <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', color: '#991b1b', borderRadius: '6px', padding: '10px 14px', fontSize: '13px', marginBottom: '14px' }}>
+            <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#fca5a5', borderRadius: '6px', padding: '10px 14px', fontSize: '13px', marginBottom: '14px' }}>
               ❌ {error}
             </div>
           )}
@@ -134,9 +134,10 @@ const Cart = ({ cartItems, onRemove, onClear, onCompletePurchase }) => {
             disabled={cartItems.length === 0 || isProcessing}
             style={{
               width: '100%', padding: '14px', fontSize: '15px', fontWeight: 700,
-              background: cartItems.length === 0 || isProcessing ? '#cbd5e1' : 'var(--primary-color)',
+              background: cartItems.length === 0 || isProcessing ? '#475569' : 'var(--primary-color)',
               cursor: cartItems.length === 0 || isProcessing ? 'not-allowed' : 'pointer',
-              transition: 'background 0.2s',
+              transition: 'all 0.2s',
+              boxShadow: cartItems.length === 0 || isProcessing ? 'none' : 'var(--shadow-md)',
             }}
           >
             {isProcessing ? '⏳ Verificando con servidor...' : 'Proceder al Pago'}
